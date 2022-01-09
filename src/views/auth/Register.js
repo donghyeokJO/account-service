@@ -1,4 +1,9 @@
 import React, {useState} from "react";
+import axios from 'axios';
+import API_URLS from "constants/api";
+import { pwdEncrypt } from "util/encrpyt";
+import { useHistory } from "react-router-dom";
+
 export default function Register() {
   const [USER_ID, SET_USER_ID] = useState("");
   const [USER_PASSWORD, SET_USER_PASSWORD] = useState("");
@@ -36,12 +41,71 @@ export default function Register() {
     SET_USER_NM(event.currentTarget.value)
   }
 
+  
+  const [checkedInputs, setCheckedInputs] = useState([]);
+
+  const changeHandler = (checked, id) => {
+    if (checked) {
+      setCheckedInputs([...checkedInputs, id]);
+    } else {
+      setCheckedInputs(checkedInputs.filter(el => el !== id));
+    };
+  }    
+  
+  const isAllChecked = checkedInputs.length === 1;
+  const disabled = !isAllChecked;
+
+  let history = useHistory();
+
   const onSubmit = (event) => {
     event.preventDefault()
-    console.log(USER_PASSWORD)
+    if(
+      USER_ID === "" |
+      USER_PASSWORD === "" |
+      CONFIRM_PASSWORD === "" |
+      COMPANY_NUM === "" |
+      CORPORATION === "" |
+      USER_POSITION === "" |
+      USER_NM === ""
+    ) return alert('모든 항목을 입력해주세요.')
+
     if(USER_PASSWORD !== CONFIRM_PASSWORD) {
       return alert('비밀번호와 비밀번호확인은 같아야 합니다.')
     }
+
+    if(disabled){
+      return alert('약관에 동의해주세요.')
+    }
+
+    // console.log(pwdEncrypt(USER_PASSWORD).encrypted_string)
+    axios.post(
+      API_URLS.USER_POST,
+      {
+        "USER_ID": USER_ID,
+        "USER_PW": pwdEncrypt(USER_PASSWORD).encrypted_string,
+        "USER_CORPORATION": {
+          "COMPANY_NUM": COMPANY_NUM,
+          "CORPORATION": CORPORATION
+        },
+        "USER_POSITION": USER_POSITION,
+        "USER_NM": USER_NM,
+      }
+    )
+    .then(function(response){
+      if(response.status === 200){
+        alert('회원가입이 완료되었습니다.');
+        history.push('/');
+      }
+    })
+    .catch(function(error){
+      // console.log(error.response.status)
+      if(error.response.status === 409){
+        return alert('중복된 ID입니다.')
+      }
+      else{
+        return alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.")
+      }
+    });
   }
 
 
@@ -132,7 +196,7 @@ export default function Register() {
                       기업 명
                     </label>
                     <input
-                      type="password"
+                      type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="기업 명"
                       name = "CORPORATION"
@@ -149,7 +213,7 @@ export default function Register() {
                       이름
                     </label>
                     <input
-                      type="password"
+                      type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="홍길동"
                       name = "USER_NM"
@@ -166,7 +230,7 @@ export default function Register() {
                       소속 및 직위
                     </label>
                     <input
-                      type="password"
+                      type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="영업팀/대리"
                       name = "USER_POSITION"
@@ -178,7 +242,11 @@ export default function Register() {
                   <div>
                     <label className="inline-flex items-center cursor-pointer">
                       <input
-                        id="customCheckLogin"
+                        id="check"
+                        onChange={e => {
+                          changeHandler(e.currentTarget.checked, 'check');
+                        }}
+                        checked={checkedInputs.includes('check') ? true : false}
                         type="checkbox"
                         className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
                       />
