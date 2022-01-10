@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createPopper } from "@popperjs/core";
+import profile from 'assets/img/profile.png';
+import API_URLS from "constants/api";
+import axios from 'axios';
+
 
 const UserDropdown = () => {
+  //functions
+  const [user_nm, setuser_nm] = useState(null)
+
+  let token = window.localStorage.getItem('token');
+
+  useEffect(() => 
+    axios.get(
+      API_URLS.USER_ONE,
+      {
+        "headers": {
+          "Authorization": token
+        }
+      }
+    ).then(function(response){
+      if(response.data.result){
+        // console.log(response.data.result[2].USER_NM)
+        setuser_nm(response.data.result[2].USER_NM)
+        // return user_name
+      }
+    }).catch(function(error){
+      alert("로그인 세션이 만료되었습니다. 다시 로그인 해 주세요.");
+      window.location.href = "/"
+    })
+  )
+
+  const LogOut = () => {
+      // event.preventDefault()
+      localStorage.removeItem('token');
+
+      window.location.href = "/"
+  }
+  // console.log(props)
+
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -19,7 +56,7 @@ const UserDropdown = () => {
     <>
       <a
         className="text-blueGray-500 block"
-        href="#pablo"
+        href="#"
         ref={btnDropdownRef}
         onClick={(e) => {
           e.preventDefault();
@@ -31,7 +68,8 @@ const UserDropdown = () => {
             <img
               alt="..."
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src={require("assets/img/team-1-800x800.jpg").default}
+              // src={require("assets/img/profile.png").default}
+              src={profile}
             />
           </span>
         </div>
@@ -43,42 +81,42 @@ const UserDropdown = () => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <a
-          href="#pablo"
+        <div
+          href=""
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
           onClick={(e) => e.preventDefault()}
         >
-          Action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a>
+          {user_nm} 님
+        </div>
         <div className="h-0 my-2 border border-solid border-blueGray-100" />
         <a
-          href="#pablo"
+          href="#"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
           onClick={(e) => e.preventDefault()}
         >
-          Seprated link
+          내 정보
+        </a>
+        <a
+          href="#"
+          className={
+            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+          }
+          onClick={(e) => e.preventDefault()}
+        >
+          문의하기
+        </a>
+        <a
+          href="#"
+          className={
+            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+          }
+          onClick={LogOut}
+        >
+          LOG OUT
         </a>
       </div>
     </>
