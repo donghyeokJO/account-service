@@ -11,7 +11,7 @@ const UserDropdown = () => {
 
   let token = window.localStorage.getItem('token');
 
-  useEffect(() => 
+  useEffect(() => {
     axios.get(
       API_URLS.USER_ONE,
       {
@@ -29,7 +29,7 @@ const UserDropdown = () => {
       alert("로그인 세션이 만료되었습니다. 다시 로그인 해 주세요.");
       window.location.href = "/"
     })
-  )
+  }, [])
 
   const LogOut = () => {
       // event.preventDefault()

@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 
 export default function CardStats({
   statSubtitle,
-  statTitle,
-  statArrow,
-  statPercent,
-  statPercentColor,
-  statDescripiron,
+  totalNum, 
+  doneNum,
+  doneNumColor,
+  yetNum,
+  yetNumColor,
   statIconName,
   statIconColor,
 }) {
@@ -21,10 +21,10 @@ export default function CardStats({
                 {statSubtitle}
               </h5>
               <span className="font-semibold text-xl text-blueGray-700">
-                {statTitle}
+                {totalNum}
               </span>
             </div>
-            <div className="relative w-auto pl-4 flex-initial">
+            {/* <div className="relative w-auto pl-4 flex-initial">
               <div
                 className={
                   "text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full " +
@@ -33,11 +33,11 @@ export default function CardStats({
               >
                 <i className={statIconName}></i>
               </div>
-            </div>
+            </div> */}
           </div>
           <p className="text-sm text-blueGray-400 mt-4">
-            <span className={statPercentColor + " mr-2"}>
-              <i
+            <span className={doneNumColor + " mr-2"}>
+              {/* <i
                 className={
                   statArrow === "up"
                     ? "fas fa-arrow-up"
@@ -45,10 +45,10 @@ export default function CardStats({
                     ? "fas fa-arrow-down"
                     : ""
                 }
-              ></i>{" "}
-              {statPercent}%
+              ></i>{" "} */}
+              결재 완료: {doneNum}
             </span>
-            <span className="whitespace-nowrap">{statDescripiron}</span>
+            <span className={yetNumColor + " mr-2"}>결재 대기: {yetNum}</span>
           </p>
         </div>
       </div>
@@ -58,24 +58,24 @@ export default function CardStats({
 
 CardStats.defaultProps = {
   statSubtitle: "Traffic",
-  statTitle: "350,897",
+  totalNum: "350,897",
   statArrow: "up",
-  statPercent: "3.48",
-  statPercentColor: "text-emerald-500",
-  statDescripiron: "Since last month",
+  doneNum: "3.48",
+  doneNumColor: "text-emerald-500",
+  yetNum: "Since last month",
   statIconName: "far fa-chart-bar",
   statIconColor: "bg-red-500",
 };
 
 CardStats.propTypes = {
   statSubtitle: PropTypes.string,
-  statTitle: PropTypes.string,
+  totalNum: PropTypes.string,
   statArrow: PropTypes.oneOf(["up", "down"]),
-  statPercent: PropTypes.string,
+  doneNum: PropTypes.string,
   // can be any of the text color utilities
   // from tailwindcss
-  statPercentColor: PropTypes.string,
-  statDescripiron: PropTypes.string,
+  doneNumColor: PropTypes.string,
+  yetNum: PropTypes.string,
   statIconName: PropTypes.string,
   // can be any of the background color utilities
   // from tailwindcss
