@@ -85,7 +85,6 @@ export default function HeaderStats() {
     }
   ).then(function(response){
     if(response.data.result){
-      console.log(response.data.result)
       setER_WRITE_DONE(response.data.result.WROTE_DONE);
       setER_WRITE_YET(response.data.result.WROTE_YET);
       setER_ASSIGNED_DONE(response.data.result.ASSIGNED_DONE);
@@ -103,15 +102,26 @@ export default function HeaderStats() {
 
   return (
     <>
-      {/* Header */}
-      <div className="relative bg-lightBlue-600 md:pt-32 pb-32 pt-12">
+      {/* { Header } */}
+      
+      <div className="relative md:pt-32 pb-32 pt-12">
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
             {/* Card stats */}
             <div className="flex flex-wrap">
-              <div className="w-full lg:w-6/12 xl:w-4/12 px-4">
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="내가 작성한 건별비용집행서(RR)"
+                  statSubtitle="내가 작성한 파일"
+                  totalNum={RR_WRITE + DR_WRITE + ER_WRITE}
+                  doneNum={RR_WRITE_DONE + DR_WRITE_DONE + ER_WRITE_DONE}
+                  doneNumColor="text-emerald-500"
+                  yetNum={RR_WRITE_YET + DR_WRITE_YET + ER_WRITE_YET}
+                  yetNumColor= "text-red-500"
+                />
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="건별비용집행서(RR)"
                   totalNum={RR_WRITE}
                   doneNum={RR_WRITE_DONE}
                   doneNumColor="text-emerald-500"
@@ -121,9 +131,9 @@ export default function HeaderStats() {
                   statIconColor="bg-red-500"
                 />
               </div>
-              <div className="w-full lg:w-6/12 xl:w-4/12 px-4">
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="내가 작성한 개인비용청구서(DR)"
+                  statSubtitle="개인비용청구서(DR)"
                   totalNum={DR_WRITE}
                   doneNum={DR_WRITE_DONE}
                   doneNumColor="text-emerald-500"
@@ -133,9 +143,9 @@ export default function HeaderStats() {
                   statIconColor="bg-orange-500"
                 />
               </div>
-              <div className="w-full lg:w-6/12 xl:w-4/12 px-4">
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="내가 작성한 지급결의서(ER)"
+                  statSubtitle="지급결의서(ER)"
                   totalNum={ER_WRITE}
                   doneNum={ER_WRITE_DONE}
                   doneNumColor="text-emerald-500"
@@ -151,14 +161,23 @@ export default function HeaderStats() {
       </div>
       
 
-      <div className="relative bg-Green-600 md:pt-32 pb-32 pt-12">
+      <div className="relative bg-blueGray-600 md:pt-32 pb-32 pt-12">
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
-            {/* Card stats */}
             <div className="flex flex-wrap">
-              <div className="w-full lg:w-6/12 xl:w-4/12 px-4">
+            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="내가 확인해야 하는 건별비용집행서(RR)"
+                  statSubtitle="내가 확인해야 파일"
+                  totalNum={RR_ASSIGNED + DR_ASSIGNED + ER_ASSIGNED}
+                  doneNum={RR_ASSIGNED_DONE + DR_ASSIGNED_DONE + ER_ASSIGNED_DONE}
+                  doneNumColor="text-emerald-500"
+                  yetNum={RR_ASSIGNED_YET + DR_ASSIGNED_YET + ER_ASSIGNED_YET}
+                  yetNumColor= "text-red-500"
+                />
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="건별비용집행서(RR)"
                   totalNum={RR_ASSIGNED}
                   doneNum={RR_ASSIGNED_DONE}
                   doneNumColor="text-emerald-500"
@@ -168,9 +187,9 @@ export default function HeaderStats() {
                   statIconColor="bg-red-500"
                 />
               </div>
-              <div className="w-full lg:w-6/12 xl:w-4/12 px-4">
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="내가 확인해야 하는 개인비용청구서(DR)"
+                  statSubtitle="개인비용청구서(DR)"
                   totalNum={DR_ASSIGNED}
                   doneNum={DR_ASSIGNED_DONE}
                   doneNumColor="text-emerald-500"
@@ -180,13 +199,69 @@ export default function HeaderStats() {
                   statIconColor="bg-orange-500"
                 />
               </div>
-              <div className="w-full lg:w-6/12 xl:w-4/12 px-4">
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="내가 확인해야 하는 지급결의서(ER)"
+                  statSubtitle="지급결의서(ER)"
                   totalNum={ER_ASSIGNED}
                   doneNum={ER_ASSIGNED_DONE}
                   doneNumColor="text-emerald-500"
                   yetNum={ER_ASSIGNED_YET}
+                  yetNumColor= "text-red-500"
+                  statIconName="fas fa-users"
+                  statIconColor="bg-pink-500"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="relative bg-lightBlue-600 md:pt-32 pb-32 pt-12">
+        <div className="px-4 md:px-10 mx-auto w-full">
+          <div>
+            {/* Card stats */}
+            <div className="flex flex-wrap">
+            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="공람 파일"
+                  totalNum={RR_ASSIGNED + DR_ASSIGNED + ER_ASSIGNED}
+                  doneNum={RR_ASSIGNED_DONE + DR_ASSIGNED_DONE + ER_ASSIGNED_DONE}
+                  doneNumColor="text-emerald-500"
+                  yetNum={RR_ASSIGNED_YET + DR_ASSIGNED_YET + ER_ASSIGNED_YET}
+                  yetNumColor= "text-red-500"
+                />
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="건별비용집행서(RR)"
+                  totalNum={RR_WRITE}
+                  doneNum={RR_WRITE_DONE}
+                  doneNumColor="text-emerald-500"
+                  yetNum={RR_WRITE_YET}
+                  yetNumColor= "text-red-500"
+                  statIconName="far fa-chart-bar"
+                  statIconColor="bg-red-500"
+                />
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="개인비용청구서(DR)"
+                  totalNum={DR_WRITE}
+                  doneNum={DR_WRITE_DONE}
+                  doneNumColor="text-emerald-500"
+                  yetNum={DR_WRITE_YET}
+                  yetNumColor= "text-red-500"
+                  statIconName="fas fa-chart-pie"
+                  statIconColor="bg-orange-500"
+                />
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                <CardStats
+                  statSubtitle="지급결의서(ER)"
+                  totalNum={ER_WRITE}
+                  doneNum={ER_WRITE_DONE}
+                  doneNumColor="text-emerald-500"
+                  yetNum={ER_WRITE_YET}
                   yetNumColor= "text-red-500"
                   statIconName="fas fa-users"
                   statIconColor="bg-pink-500"

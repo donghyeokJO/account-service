@@ -25,10 +25,12 @@ export default function Auth() {
             }}
           ></div>
           <Switch>
+            <Route path="/auth" exact component={Login}/>
             <Route path="/auth/login" exact component={Login} />
             <Route path="/auth/register" exact component={Register} />
-            <Redirect from="/" to="/auth/login" />
+            {/* <Redirect from="/" to="/auth/login" /> */}
           </Switch>
+          <Redirect from='/' to ="/auth"/>
           {/* <FooterSmall absolute /> */}
         </section>
       </main>

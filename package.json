@@ -17,6 +17,7 @@
     "postcss": "^8.4.5",
     "react": "17.0.1",
     "react-async": "^10.0.1",
+    "react-bones": "^1.0.3",
     "react-dom": "17.0.1",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",

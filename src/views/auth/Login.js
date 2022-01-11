@@ -18,7 +18,7 @@ export default function Login() {
       }
     ).then(function(response){
       if(response.data.result){
-        history.push("/landing")
+        history.push('/landing')
       }
     }).catch(function(error){
     })
@@ -58,9 +58,9 @@ export default function Login() {
         "USER_PW": pwdEncrypt(USER_PASSWORD).encrypted_string
       }
     ).then(function(response){
-      console.log(response);
+      // console.log(response);
       if(response.status === 200){
-        console.log(response.data.result.token)
+        // console.log(response.data.result.token)
         window.localStorage.setItem('token', response.data.result.token);
       
         history.push('/landing');

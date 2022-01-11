@@ -57,25 +57,25 @@ export default function CardStats({
 }
 
 CardStats.defaultProps = {
-  statSubtitle: "Traffic",
-  totalNum: "350,897",
-  statArrow: "up",
-  doneNum: "3.48",
-  doneNumColor: "text-emerald-500",
-  yetNum: "Since last month",
+  statSubtitle:"",
+  totalNum:"0", 
+  doneNum:"0",
+  doneNumColor:"text-emerald-500",
+  yetNum:"0",
+  yetNumColor:"text-red-500",
   statIconName: "far fa-chart-bar",
   statIconColor: "bg-red-500",
 };
 
 CardStats.propTypes = {
   statSubtitle: PropTypes.string,
-  totalNum: PropTypes.string,
+  totalNum: PropTypes.number,
   statArrow: PropTypes.oneOf(["up", "down"]),
-  doneNum: PropTypes.string,
+  doneNum: PropTypes.number,
   // can be any of the text color utilities
   // from tailwindcss
   doneNumColor: PropTypes.string,
-  yetNum: PropTypes.string,
+  yetNum: PropTypes.number,
   statIconName: PropTypes.string,
   // can be any of the background color utilities
   // from tailwindcss
